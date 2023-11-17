@@ -22,7 +22,6 @@ onValue(cartItemsInDB, function(snapshot) {
     renderItems(cartItems)
 })
 
-
 addBtn.addEventListener("click", function() {
     let inputValue = inputEl.value
     if (inputValue) {
@@ -35,11 +34,8 @@ function renderItems(cartItems) {
     let showItems = ""
     for (let i = 0; i < cartItems.length; i++) {
         showItems += `
-            <li>
-                <button>${cartItems[i]}</button>
-            </li>
+            <li>${cartItems[i]}</li>
         `
     }
     shoppingList.innerHTML = showItems
 };
-
