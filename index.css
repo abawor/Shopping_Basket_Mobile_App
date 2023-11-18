@@ -2,7 +2,9 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Rubik', sans-serif;
-    background-color: #EEF0F4;
+    background-color: #67E9FF;
+    color: #432000;
+    user-select: none;
 }
 
 .container {
@@ -13,8 +15,9 @@ html, body {
 }
 
 img {
-    width: 150px;
+    width: 200px;
     margin: 0 auto;
+    border-radius: 10px;
 }
 
 input {
@@ -30,14 +33,19 @@ input {
 }
 
 button {
-    color: #FDFDFD;
-    background-color: #AC485A;
+    color: white;
+    background-color: darkcyan;
     border: 0;
     border-radius: 5px;
     text-align: center;
     padding: 15px;
     font-size: 20px;
     font-family: 'Rubik', sans-serif;
+}
+
+button:hover {
+    background-color: #005050;
+    cursor: pointer;
 }
 
 ul {
@@ -53,10 +61,14 @@ ul li {
     flex-grow: 1;
     background-color: #FFFDF8;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-    color: #432000;
     border-radius: 8px;
     padding: 15px;
     flex-grow: 1;
     text-align: center;
     text-transform: capitalize;
+}
+
+li:hover {
+    background-color: gray;
+    cursor: pointer;
 }
