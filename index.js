@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
 const appSettings = {
     databaseURL: "https://mobileappshoppingbasket-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -14,12 +14,17 @@ const addBtn = document.getElementById("add-button");
 const shoppingList = document.getElementById("shopping-list");
 
 onValue(cartItemsInDB, function(snapshot) {
-    let cartItemsArr = Object.values(snapshot.val())
-    let cartItems = []
-    for (let i = 0; i < cartItemsArr.length; i++) {
-        cartItems.push(cartItemsArr[i])
+    if (snapshot.exists()) {
+        let cartItemsArr = Object.entries(snapshot.val())
+        clearShoppingList()
+        for (let i = 0; i < cartItemsArr.length; i++) {
+            let currentItem = cartItemsArr[i]
+            renderItem(currentItem)
+        }
+    } else {
+        clearShoppingList()
     }
-    renderItems(cartItems)
+
 })
 
 addBtn.addEventListener("click", function() {
@@ -30,12 +35,19 @@ addBtn.addEventListener("click", function() {
     }
 });
 
-function renderItems(cartItems) {
-    let showItems = ""
-    for (let i = 0; i < cartItems.length; i++) {
-        showItems += `
-            <li>${cartItems[i]}</li>
-        `
-    }
-    shoppingList.innerHTML = showItems
+function renderItem(currentItem) {
+    let itemID = currentItem[0]
+    let itemValue = currentItem[1]
+    let newEl = document.createElement("li")
+    newEl.id = itemID
+    newEl.textContent = itemValue
+    shoppingList.append(newEl)
+    newEl.addEventListener("dblclick", function() {
+        let exactLocationOfItemInDB = ref(database, `cartitems/${itemID}`)
+        remove(exactLocationOfItemInDB)
+    })
+};
+
+function clearShoppingList() {
+    shoppingList.innerHTML = ""
 };
