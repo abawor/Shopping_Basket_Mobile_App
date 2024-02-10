@@ -12,6 +12,8 @@ const cartItemsInDB = ref(database, "cartitems");
 const inputEl = document.getElementById("input-field");
 const addBtn = document.getElementById("add-button");
 const shoppingList = document.getElementById("shopping-list");
+const suggestedItems = document.getElementById("suggested-items");
+const suggestions = ['🍇', '🍌', '🍎', '🍊', '🍋', '🍐', '🍑', '🍒', '🍓', '🥝', '🍅', '🥑', '🥔', '🥕', '🥒', '🥬', '🥦', '🧄', '🧅', '🥜', '🍞', '🧀', '🍗', '🥩', '🥓', '🍟', '🍕', '🥚', '🧈', '🧂', '🍫', '🥛', '🧃']
 
 onValue(cartItemsInDB, function(snapshot) {
     if (snapshot.exists()) {
@@ -24,7 +26,7 @@ onValue(cartItemsInDB, function(snapshot) {
     } else {
         clearShoppingList()
     }
-
+    checkAndAddSuggestions()
 })
 
 addBtn.addEventListener("click", function() {
@@ -33,6 +35,7 @@ addBtn.addEventListener("click", function() {
         push(cartItemsInDB, inputValue)
         inputEl.value = ""
     }
+    checkAndAddSuggestions()
 });
 
 function renderItem(currentItem) {
@@ -51,3 +54,15 @@ function renderItem(currentItem) {
 function clearShoppingList() {
     shoppingList.innerHTML = ""
 };
+
+function checkAndAddSuggestions() {
+    suggestedItems.innerHTML = ""
+    for (let i = 0; i < suggestions.length; i++) {
+        if (!(shoppingList.innerText.includes(suggestions[i]))) {
+            let newItem = document.createElement("option")
+            let node = document.createTextNode(suggestions[i])
+            newItem.appendChild(node)
+            suggestedItems.appendChild(newItem)
+        }
+    }
+}
