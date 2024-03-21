@@ -2,7 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Rubik', sans-serif;
-    background-color: #67E9FF;
+    background-color: hsl(56, 63%, 74%);
     color: #432000;
     user-select: none;
 }
@@ -17,7 +17,7 @@ html, body {
 #input-field {
     color: #432000;
     background-color: #DCE1EB;
-    border: 0;
+    border: 1px solid hsl(56, 21%, 44%);
     border-radius: 8px;
     text-align: center;
     padding: 15px;
@@ -27,20 +27,38 @@ html, body {
     width: -webkit-fill-available
 }
 
+#buttons-box {
+    justify-content: space-between;
+    display: flex;
+}
+
+#add-now-button {
+    background-color: #4faa66;
+    width: 65%;
+}
+
 button {
     color: white;
-    background-color: darkcyan;
+    background-color: rgb(134, 160, 182);
     border: 0;
     border-radius: 5px;
     text-align: center;
     padding: 15px;
     font-size: 20px;
     font-family: 'Rubik', sans-serif;
+    min-width: 33%;
 }
 
 button:hover {
     background-color: #005050;
     cursor: pointer;
+}
+
+.buy-time {
+    font-size: 25px;
+    margin: 20px 0 0;
+    color: hsl(56, 21%, 27%);;
+    border-bottom: 1px solid hsl(56, 21%, 27%);
 }
 
 ul {

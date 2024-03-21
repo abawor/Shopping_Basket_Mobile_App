@@ -18,8 +18,14 @@
                 <input type="text" list="suggested-items" id="input-field" placeholder="Nowy produkt:">
                 <datalist id="suggested-items"></datalist>
             </div>
-            <button id="add-button">Dodaj</button>
-            <ul id="shopping-list"></ul>
+            <div id="buttons-box">
+                <button id="add-now-button">Teraz</button>
+                <button id="add-later-button">Później</button>
+            </div>
+            <div class="buy-time">Lista na teraz</div>
+            <ul id="shopping-list-now"></ul>
+            <div class="buy-time">Lista na nowy miesiąc</div>
+            <ul id="shopping-list-later"></ul>
         </div>
         <script src="index.js" type="module"></script>
     </body>
