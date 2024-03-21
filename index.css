@@ -10,14 +10,8 @@ html, body {
 .container {
     display: flex;
     flex-direction: column;
-    max-width: 320px;
-    margin: 30px auto;
-}
-
-img {
-    width: 150px;
-    margin: 0 auto;
-    border-radius: 10px;
+    max-width: auto;
+    margin: 10px 20px;
 }
 
 #input-field {
@@ -29,8 +23,8 @@ img {
     padding: 15px;
     font-size: 20px;
     font-family: 'Rubik', sans-serif;
-    margin: 10px 0;
-    width: 290px;
+    margin: 10px 0px;
+    width: -webkit-fill-available
 }
 
 button {
