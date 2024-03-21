@@ -10,14 +10,20 @@ const database = getDatabase(app);
 const cartItemsInDB = ref(database, "cartitems");
 
 const inputEl = document.getElementById("input-field");
-const addBtn = document.getElementById("add-button");
-const shoppingList = document.getElementById("shopping-list");
+const addNowBtn = document.getElementById("add-now-button");
+const addLaterBtn = document.getElementById("add-later-button");
+const shoppingListNow = document.getElementById("shopping-list-now");
+const shoppingListLater = document.getElementById("shopping-list-later");
 const suggestedItems = document.getElementById("suggested-items");
 const suggestions = ['🍇', '🍌', '🍎', '🍊', '🍋', '🍐', '🍑', '🍒', '🍓', '🥝', '🍅', '🥑', '🥔', '🥕', '🥒', '🥬', '🥦', '🧄', '🧅', '🥜', '🍞', '🧀', '🍗', '🥩', '🥓', '🍟', '🍕', '🥚', '🧈', '🧂', '🍫', '🥛', '🧃']
 
 onValue(cartItemsInDB, function(snapshot) {
     if (snapshot.exists()) {
         let cartItemsArr = Object.entries(snapshot.val())
+        console.log(cartItemsArr)
+        console.log(cartItemsArr[2][1])
+        console.log(cartItemsArr[2][1].itemName)
+        console.log(cartItemsArr[2][1].shopName)
         clearShoppingList()
         for (let i = 0; i < cartItemsArr.length; i++) {
             let currentItem = cartItemsArr[i]
@@ -29,10 +35,22 @@ onValue(cartItemsInDB, function(snapshot) {
     checkAndAddSuggestions()
 })
 
-addBtn.addEventListener("click", function() {
-    let inputValue = inputEl.value
-    if (inputValue) {
-        push(cartItemsInDB, inputValue)
+addNowBtn.addEventListener("click", function() {
+    let newItem = inputEl.value
+    if (newItem) {
+        push(cartItemsInDB, newItem)
+        inputEl.value = ""
+    }
+    checkAndAddSuggestions()
+});
+
+addLaterBtn.addEventListener("click", function() {
+    let newItem = inputEl.value
+    /*let shopName = "lidl"
+    let newItem = {"itemName": itemName, "shopName": shopName, "buyTime": buyTime}
+    */
+    if (newItem) {
+        push(cartItemsInDB, newItem)
         inputEl.value = ""
     }
     checkAndAddSuggestions()
@@ -44,7 +62,7 @@ function renderItem(currentItem) {
     let newEl = document.createElement("li")
     newEl.id = itemID
     newEl.textContent = itemValue
-    shoppingList.append(newEl)
+    shoppingListNow.append(newEl)
     newEl.addEventListener("dblclick", function() {
         let exactLocationOfItemInDB = ref(database, `cartitems/${itemID}`)
         remove(exactLocationOfItemInDB)
@@ -52,13 +70,13 @@ function renderItem(currentItem) {
 };
 
 function clearShoppingList() {
-    shoppingList.innerHTML = ""
+    shoppingListNow.innerHTML = ""
 };
 
 function checkAndAddSuggestions() {
     suggestedItems.innerHTML = ""
     for (let i = 0; i < suggestions.length; i++) {
-        if (!(shoppingList.innerText.includes(suggestions[i]))) {
+        if (!(shoppingListNow.innerText.includes(suggestions[i]))) {
             let newItem = document.createElement("option")
             let node = document.createTextNode(suggestions[i])
             newItem.appendChild(node)

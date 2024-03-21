@@ -37,6 +37,11 @@ html, body {
     width: 65%;
 }
 
+#add-now-button:hover {
+    background-color: #338a49;
+    width: 65%;
+}
+
 button {
     color: white;
     background-color: rgb(134, 160, 182);
@@ -50,7 +55,7 @@ button {
 }
 
 button:hover {
-    background-color: #005050;
+    background-color: rgb(85, 111, 134);
     cursor: pointer;
 }
 
