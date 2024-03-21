@@ -20,10 +20,6 @@ const suggestions = ['🍇', '🍌', '🍎', '🍊', '🍋', '🍐', '🍑', '�
 onValue(cartItemsInDB, function(snapshot) {
     if (snapshot.exists()) {
         let cartItemsArr = Object.entries(snapshot.val())
-        console.log(cartItemsArr)
-        console.log(cartItemsArr[2][1])
-        console.log(cartItemsArr[2][1].itemName)
-        console.log(cartItemsArr[2][1].shopName)
         clearShoppingList()
         for (let i = 0; i < cartItemsArr.length; i++) {
             let currentItem = cartItemsArr[i]
@@ -36,7 +32,9 @@ onValue(cartItemsInDB, function(snapshot) {
 })
 
 addNowBtn.addEventListener("click", function() {
-    let newItem = inputEl.value
+    let itemName = inputEl.value
+    let buyTime = "buy_now"
+    let newItem = {"itemName": itemName, "buyTime": buyTime}
     if (newItem) {
         push(cartItemsInDB, newItem)
         inputEl.value = ""
@@ -45,10 +43,9 @@ addNowBtn.addEventListener("click", function() {
 });
 
 addLaterBtn.addEventListener("click", function() {
-    let newItem = inputEl.value
-    /*let shopName = "lidl"
-    let newItem = {"itemName": itemName, "shopName": shopName, "buyTime": buyTime}
-    */
+    let itemName = inputEl.value
+    let buyTime = "buy_later"
+    let newItem = {"itemName": itemName, "buyTime": buyTime}
     if (newItem) {
         push(cartItemsInDB, newItem)
         inputEl.value = ""
@@ -58,11 +55,15 @@ addLaterBtn.addEventListener("click", function() {
 
 function renderItem(currentItem) {
     let itemID = currentItem[0]
-    let itemValue = currentItem[1]
+    let itemValue = currentItem[1].itemName
     let newEl = document.createElement("li")
     newEl.id = itemID
     newEl.textContent = itemValue
-    shoppingListNow.append(newEl)
+    if (currentItem[1].buyTime === "buy_now"){
+        shoppingListNow.append(newEl)
+    } else {
+        shoppingListLater.append(newEl)
+    }
     newEl.addEventListener("dblclick", function() {
         let exactLocationOfItemInDB = ref(database, `cartitems/${itemID}`)
         remove(exactLocationOfItemInDB)
@@ -71,6 +72,7 @@ function renderItem(currentItem) {
 
 function clearShoppingList() {
     shoppingListNow.innerHTML = ""
+    shoppingListLater.innerHTML = ""
 };
 
 function checkAndAddSuggestions() {
