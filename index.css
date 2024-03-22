@@ -10,12 +10,16 @@ html, body {
 .container {
     display: flex;
     flex-direction: column;
-    max-width: auto;
+    max-width: 800px;
     margin: 10px 20px;
 }
 
 #shops-list li {
     padding: 10px;
+}
+
+#shops-list li.active {
+    color: white;
 }
 
 #Lidl.active {
@@ -32,7 +36,6 @@ html, body {
 
 #Tesco.active {
     background-color: rgb(41, 44, 199);
-    color: white;
 }
 
 #Costco.active {
@@ -41,7 +44,6 @@ html, body {
 
 #Other.active {
     background-color: rgb(105, 105, 105);
-    color: white;
 }
 
 #input-field {
@@ -62,12 +64,12 @@ html, body {
     display: flex;
 }
 
-#add-now-button {
+#buy-now-button {
     background-color: #4faa66;
     width: 65%;
 }
 
-#add-now-button:hover {
+#buy-now-button:hover {
     background-color: #338a49;
     width: 65%;
 }

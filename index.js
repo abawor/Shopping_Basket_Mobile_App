@@ -12,8 +12,8 @@ const cartItemsInDB = ref(database, "cartitems");
 const inputEl = document.getElementById("input-field");
 const shopsListDiv = document.getElementById("shops-list")
 const shopsList = ["Lidl", "Asda", "Morrisons", "Tesco", "Costco", "Other"]
-const addNowBtn = document.getElementById("add-now-button");
-const addLaterBtn = document.getElementById("add-later-button");
+const currentShop = "Lidl"
+const addBtns = [document.getElementById("buy-now-button"), document.getElementById("buy-later-button")]
 const buyNowDiv = document.getElementById("buy-now")
 const buyLaterDiv = document.getElementById("buy-later")
 const shoppingListNow = document.getElementById("shopping-list-now");
@@ -35,33 +35,25 @@ onValue(cartItemsInDB, function(snapshot) {
     checkAndAddSuggestions()
 })
 
-addNowBtn.addEventListener("click", function() {
-    let itemName = inputEl.value
-    if (itemName) {
-        let buyTime = "buy_now"
-        let newItem = {"itemName": itemName, "buyTime": buyTime}
-        if (newItem) {
-            push(cartItemsInDB, newItem)
-            inputEl.value = ""
-        }
-        checkAndAddSuggestions()
-    }
-    buyTimeDivDisplay()
+addBtns.forEach(button => {
+    addBtnHandler(button)
 });
 
-addLaterBtn.addEventListener("click", function() {
-    let itemName = inputEl.value
-    if (itemName) {
-        let buyTime = "buy_later"
-        let newItem = {"itemName": itemName, "buyTime": buyTime}
-        if (newItem) {
-            push(cartItemsInDB, newItem)
-            inputEl.value = ""
+function addBtnHandler(button) {
+    button.addEventListener("click", function() {
+        let itemName = inputEl.value
+        if (itemName) {
+            let buyTime = button.id
+            let newItem = {"itemName": itemName, "buyTime": buyTime}
+            if (newItem) {
+                push(cartItemsInDB, newItem)
+                inputEl.value = ""
+            }
+            checkAndAddSuggestions()
         }
-        checkAndAddSuggestions()
-    }
-});
-
+        buyTimeDivDisplay()
+    });
+}
 
 function buyTimeDivDisplay() {
     if (shoppingListNow.getElementsByTagName('li').length === 0) {
@@ -78,7 +70,7 @@ function renderItem(currentItem) {
     let newEl = document.createElement("li")
     newEl.id = itemID
     newEl.textContent = itemValue
-    if (currentItem[1].buyTime === "buy_now"){
+    if (currentItem[1].buyTime === "buy-now-button"){
         buyNowDiv.style.display = "flex"
         shoppingListNow.append(newEl)
     } else {
