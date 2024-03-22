@@ -10,6 +10,9 @@ const database = getDatabase(app);
 const cartItemsInDB = ref(database, "cartitems");
 
 const inputEl = document.getElementById("input-field");
+const shopsListDiv = document.getElementById("shops-list")
+const shopsList = ["Lidl", "Asda", "Morrisons", "Tesco", "Costco", "Other"]
+const shopsListStyles = {Lidl: "blue", Asda: "green", Morrisons: "yellow", Tesco: "red", Costco: "purple", Other: "white"}
 const addNowBtn = document.getElementById("add-now-button");
 const addLaterBtn = document.getElementById("add-later-button");
 const buyNowDiv = document.getElementById("buy-now")
@@ -89,6 +92,18 @@ function renderItem(currentItem) {
         buyTimeDivDisplay()
     })
 };
+
+function renderShopsList() {
+    for (let i = 0; i < shopsList.length; i++) {
+        let shopName = shopsList[i]
+        let newEl = document.createElement("li")
+        newEl.id = shopName
+        newEl.textContent = shopName
+        shopsListDiv.append(newEl)
+    }
+}
+
+renderShopsList()
 
 function clearShoppingList() {
     shoppingListNow.innerHTML = ""
