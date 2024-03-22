@@ -12,7 +12,6 @@ const cartItemsInDB = ref(database, "cartitems");
 const inputEl = document.getElementById("input-field");
 const shopsListDiv = document.getElementById("shops-list")
 const shopsList = ["Lidl", "Asda", "Morrisons", "Tesco", "Costco", "Other"]
-const shopsListStyles = {Lidl: "blue", Asda: "green", Morrisons: "yellow", Tesco: "red", Costco: "purple", Other: "white"}
 const addNowBtn = document.getElementById("add-now-button");
 const addLaterBtn = document.getElementById("add-later-button");
 const buyNowDiv = document.getElementById("buy-now")
@@ -99,11 +98,32 @@ function renderShopsList() {
         let newEl = document.createElement("li")
         newEl.id = shopName
         newEl.textContent = shopName
+        if (shopName === "Lidl") {
+            newEl.className += " active"
+        }
         shopsListDiv.append(newEl)
     }
 }
 
 renderShopsList()
+
+function activateShop() {
+    let shopBtns = shopsListDiv.getElementsByTagName("li")
+    for (let i = 0; i < shopBtns.length; i++) {
+        shopBtns[i].addEventListener("click", function() {
+            let current = document.getElementsByClassName("active")
+
+            if (current.length > 0) {
+              current[0].className = current[0].className.replace(" active", "")
+            }
+
+            this.className += " active"
+        })
+    }
+}
+
+activateShop()
+
 
 function clearShoppingList() {
     shoppingListNow.innerHTML = ""

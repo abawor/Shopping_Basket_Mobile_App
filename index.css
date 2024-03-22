@@ -14,6 +14,36 @@ html, body {
     margin: 10px 20px;
 }
 
+#shops-list li {
+    padding: 10px;
+}
+
+#Lidl.active {
+    background-color: rgb(0, 132, 255);
+}
+
+#Asda.active {
+    background-color: rgb(41, 199, 41);
+}
+
+#Morrisons.active {
+    background-color: rgb(206, 196, 62);
+}
+
+#Tesco.active {
+    background-color: rgb(41, 44, 199);
+    color: white;
+}
+
+#Costco.active {
+    background-color: rgb(212, 78, 78);
+}
+
+#Other.active {
+    background-color: rgb(105, 105, 105);
+    color: white;
+}
+
 #input-field {
     color: #432000;
     background-color: #DCE1EB;
