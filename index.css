@@ -16,33 +16,36 @@ html, body {
 
 #shops-list li {
     padding: 10px;
+    color: white;
+    opacity: 0.6;
 }
 
 #shops-list li.active {
-    color: white;
+    border: 2px solid rgb(41, 41, 41);
+    opacity: 1;
 }
 
-#Lidl.active {
+#Lidl {
     background-color: rgb(0, 132, 255);
 }
 
-#Asda.active {
+#Asda {
     background-color: rgb(41, 199, 41);
 }
 
-#Morrisons.active {
-    background-color: rgb(206, 196, 62);
+#Morrisons {
+    background-color: rgb(189, 178, 28);
 }
 
-#Tesco.active {
+#Tesco {
     background-color: rgb(41, 44, 199);
 }
 
-#Costco.active {
+#Costco {
     background-color: rgb(212, 78, 78);
 }
 
-#Other.active {
+#Other {
     background-color: rgb(105, 105, 105);
 }
 
@@ -94,7 +97,7 @@ button:hover {
 .buy-time {
     font-size: 25px;
     margin: 20px 0 0;
-    color: hsl(56, 21%, 27%);;
+    color: hsl(56, 21%, 27%);
     border-bottom: 1px solid hsl(56, 21%, 27%);
     display: none;
 }

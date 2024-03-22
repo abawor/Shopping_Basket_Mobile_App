@@ -99,7 +99,7 @@ function renderShopsList() {
 
 renderShopsList()
 
-function activateShop() {
+function activeShop() {
     let shopBtns = shopsListDiv.getElementsByTagName("li")
     for (let i = 0; i < shopBtns.length; i++) {
         shopBtns[i].addEventListener("click", function() {
@@ -114,7 +114,7 @@ function activateShop() {
     }
 }
 
-activateShop()
+activeShop()
 
 
 function clearShoppingList() {
