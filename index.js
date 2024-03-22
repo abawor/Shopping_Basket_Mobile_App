@@ -12,7 +12,6 @@ const cartItemsInDB = ref(database, "cartitems");
 const inputEl = document.getElementById("input-field");
 const shopsListDiv = document.getElementById("shops-list")
 const shopsList = ["Lidl", "Asda", "Morrisons", "Tesco", "Costco", "Other"]
-const currentShop = "Lidl"
 const addBtns = [document.getElementById("buy-now-button"), document.getElementById("buy-later-button")]
 const buyNowDiv = document.getElementById("buy-now")
 const buyLaterDiv = document.getElementById("buy-later")
@@ -20,11 +19,20 @@ const shoppingListNow = document.getElementById("shopping-list-now");
 const shoppingListLater = document.getElementById("shopping-list-later");
 const suggestedItems = document.getElementById("suggested-items");
 const suggestions = ['🍇', '🍌', '🍎', '🍊', '🍋', '🍐', '🍑', '🍒', '🍓', '🥝', '🍅', '🥑', '🥔', '🥕', '🥒', '🥬', '🥦', '🧄', '🧅', '🥜', '🍞', '🧀', '🍗', '🥩', '🥓', '🍟', '🍕', '🥚', '🧈', '🧂', '🍫', '🥛', '🧃']
+let currentShop = "Lidl"
 
 onValue(cartItemsInDB, function(snapshot) {
     if (snapshot.exists()) {
         let cartItemsArr = Object.entries(snapshot.val())
         clearShoppingList()
+
+        cartItemsArr.sort((a, b) => {
+            const shopIndexA = shopsList.indexOf(a[1].currentShop)
+            const shopIndexB = shopsList.indexOf(b[1].currentShop)
+            return shopIndexA - shopIndexB
+        })
+
+        console.log(cartItemsArr)
         for (let i = 0; i < cartItemsArr.length; i++) {
             let currentItem = cartItemsArr[i]
             renderItem(currentItem)
@@ -32,6 +40,7 @@ onValue(cartItemsInDB, function(snapshot) {
     } else {
         clearShoppingList()
     }
+    
     checkAndAddSuggestions()
 })
 
@@ -44,7 +53,11 @@ function addBtnHandler(button) {
         let itemName = inputEl.value
         if (itemName) {
             let buyTime = button.id
-            let newItem = {"itemName": itemName, "buyTime": buyTime}
+            let newItem = {
+                "itemName": itemName,
+                "buyTime": buyTime,
+                "currentShop": currentShop
+            }
             if (newItem) {
                 push(cartItemsInDB, newItem)
                 inputEl.value = ""
@@ -70,6 +83,7 @@ function renderItem(currentItem) {
     let newEl = document.createElement("li")
     newEl.id = itemID
     newEl.textContent = itemValue
+    newEl.className = currentItem[1].currentShop
     if (currentItem[1].buyTime === "buy-now-button"){
         buyNowDiv.style.display = "flex"
         shoppingListNow.append(newEl)
@@ -108,8 +122,8 @@ function activeShop() {
             if (current.length > 0) {
               current[0].className = current[0].className.replace(" active", "")
             }
-
             this.className += " active"
+            currentShop = this.id
         })
     }
 }
