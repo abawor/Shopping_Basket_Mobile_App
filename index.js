@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
 const appSettings = {
     databaseURL: "https://mobileappshoppingbasket-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -32,7 +32,6 @@ onValue(cartItemsInDB, function(snapshot) {
             return shopIndexA - shopIndexB
         })
 
-        console.log(cartItemsArr)
         for (let i = 0; i < cartItemsArr.length; i++) {
             let currentItem = cartItemsArr[i]
             renderItem(currentItem)
@@ -96,6 +95,44 @@ function renderItem(currentItem) {
         remove(exactLocationOfItemInDB)
         buyTimeDivDisplay()
     })
+
+    let pressTimer = 0
+    let interval = 0
+
+    newEl.addEventListener("touchstart", () => {
+        interval = setInterval(() => {
+            pressTimer++
+            if (pressTimer >= 1) {
+                clearInterval(interval)
+                newEl.contentEditable = "true"
+                newEl.focus()
+            }
+        }, 1000)
+    });
+
+    newEl.addEventListener("touchend", () => {
+        clearInterval(interval)
+        pressTimer = 0
+    })
+
+    newEl.addEventListener("blur", () => {
+        saveChanges(newEl, itemID);
+    });
+
+    document.addEventListener("click", function (event) {
+        if (newEl.contentEditable === "true" && !newEl.contains(event.target)) {
+            saveChanges(newEl, itemID);
+        }
+    });
+
+    function saveChanges(element, itemId) {
+        element.contentEditable = "false";
+        const newValue = element.textContent;
+        let exactLocationOfItemInDB = ref(database, `cartitems/${itemId}/itemName`);
+        set(exactLocationOfItemInDB, newValue)
+        clearInterval(interval)
+        pressTimer = 0
+    }
 };
 
 function renderShopsList() {
