@@ -1,6 +1,6 @@
 {
-    "name":"Cart Items",
-    "short_name":"Cart Items",
+    "name":"",
+    "short_name":"",
     "icons":[
         {
             "src":"/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
             "type":"image/png"
         }
     ],
-    "theme_color": "#EEF0F4",
-    "background_color":"#EEF0F4",
+    "theme_color": "#e6e193",
+    "background_color":"#e6e193",
     "display":"standalone"
 }
